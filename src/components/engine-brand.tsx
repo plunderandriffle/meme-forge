@@ -1,0 +1,3 @@
+import { Link } from '@tanstack/react-router';
+export function Glyph({className=''}:{className?:string}){return <svg className={className} viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M3 7h7V3h5v7h3V3h5v4h6v20h-9v-7h-8v7H3V7Zm5 5v5h4v-5H8Zm12 0v5h4v-5h-4ZM8 22v3h2v-3H8Zm14 0v3h2v-3h-2Z"/></svg>}
+export function Brand(){return <Link to="/" className="brand"><Glyph className="size-8 text-primary"/><span>THE MEME ENGINE<span className="brand-sub">CREATIVE INFRASTRUCTURE</span></span></Link>}

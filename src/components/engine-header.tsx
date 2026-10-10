@@ -1,0 +1,7 @@
+import { Link, useNavigate, useRouter } from '@tanstack/react-router';
+import { useEffect, useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { Button } from '@/components/ui/button';
+import { Brand } from './engine-brand';
+import { ArrowUpRight, LogOut } from 'lucide-react';
+export function EngineHeader(){const [email,setEmail]=useState<string|null>(null); const router=useRouter();const navigate=useNavigate();useEffect(()=>{supabase.auth.getUser().then(({data})=>setEmail(data.user?.email??null));},[router.state.location.href]);return <header className="engine-header"><Brand/><nav><Link to="/how-it-works">How it works</Link><Link to="/apply">Creator access</Link>{email?<><Link to="/status">My application</Link><Button title="Sign out" aria-label="Sign out" variant="ghost" size="icon" onClick={async()=>{await router.options.context.queryClient.cancelQueries();router.options.context.queryClient.clear();await supabase.auth.signOut();setEmail(null);navigate({to:'/auth',replace:true});}}><LogOut/></Button></>:<Link to="/auth" className="sign-in">Sign in <ArrowUpRight size={14}/></Link>}</nav><span className="access-status"><i/> BETA ACCESS</span></header>}
