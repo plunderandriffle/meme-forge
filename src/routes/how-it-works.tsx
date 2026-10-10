@@ -1,0 +1,6 @@
+import {createFileRoute,Link} from '@tanstack/react-router';
+import {ArrowRight} from 'lucide-react';
+import {Button} from '@/components/ui/button';
+import {pageHead} from '@/lib/engine-schema';
+export const Route=createFileRoute('/how-it-works')({head:()=>pageHead('How it works','From a single idea to content built to travel. Discover your creator journey.'),component:How});
+function How(){return <main className="info-page"><div className="eyebrow">THE CREATOR JOURNEY</div><h1>One idea. Every possibility.</h1><p>Your voice belongs in the engine.</p><div className="info-grid">{[['01','Bring your identity','Connect with email and tell us a little about yourself.'],['02','Share your vision','A personal brand, a business, a community. Start with what matters to you.'],['03','Enter the engine','We review every application. Once approved, your creator workspace is ready.']].map(([n,title,text])=><section key={n}><span className="font-mono text-primary text-sm">{n} /</span><h2>{title}</h2><p>{text}</p></section>)}</div><Button asChild className="apply-cta"><Link to="/apply">Apply for Access <ArrowRight/></Link></Button><Button variant="ghost" asChild className="ml-4"><Link to="/preview">Explore the workspace <ArrowRight/></Link></Button></main>}

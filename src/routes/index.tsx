@@ -1,24 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
-
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
-export const Route = createFileRoute("/")({
-  component: Index,
-});
-
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
+import { createFileRoute, Link } from '@tanstack/react-router';
+import { ArrowRight, AudioLines, Globe2, ScanFace, Video } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { ContentWall } from '@/components/content-wall';
+import { Glyph } from '@/components/engine-brand';
+import { pageHead } from '@/lib/engine-schema';
+export const Route=createFileRoute('/')({head:()=>pageHead('Creator access','Turn ideas, websites, products and social posts into memes, videos, songs and content built to travel.'),component:Index});
+function Index(){return <><main><section className="home-hero"><ContentWall/><div className="hero-copy"><div className="eyebrow">01 / CREATOR APPLICATION</div><h1>One thought.<br/><span>Infinite content.</span></h1><p className="hero-description">Turn ideas, websites, products and social posts into memes, videos, songs and content built to travel.</p><Button asChild className="apply-cta"><Link to="/apply">Apply for Access <ArrowRight/></Link></Button><p className="hero-note">FOR THE CREATORS. NOT THE ALGORITHM.</p></div><div className="hero-types">MEMES <span>/</span> VIDEO <span>/</span> AUDIO <span>/</span> GLOBAL</div><div className="hero-index">[ SYSTEM ONLINE · V.01 ]</div></section><section className="output-strip">{[[ScanFace,'Memes that move','From one thought to a cultural moment.'],[Video,'Stories in motion','Short-form. Long reach.'],[AudioLines,'Sound with a signal','Your ideas, on a different frequency.'],[Globe2,'Built to travel','One idea. Every language.']].map(([Icon,title,text])=>{const I=Icon as typeof ScanFace;return <div className="output-item" key={String(title)}><I/><div><strong>{String(title)}</strong><p>{String(text)}</p></div></div>})}</section></main><footer className="engine-footer"><span>© 2026 THE MEME ENGINE</span><Link to="/preview" className="footer-center"><Glyph className="size-4"/> EXPLORE THE ENGINE <ArrowRight size={12}/></Link><span>BUILT BY THE PEOPLE.</span></footer></>}

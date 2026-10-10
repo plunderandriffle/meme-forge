@@ -1,0 +1,7 @@
+import {createFileRoute} from '@tanstack/react-router';
+import {useEffect,useState} from 'react';
+import {supabase} from '@/integrations/supabase/client';
+import {Button} from '@/components/ui/button';
+import {pageHead} from '@/lib/engine-schema';
+export const Route=createFileRoute('/reset-password')({head:()=>pageHead('Reset password','Set a new password for your creator account.'),component:Reset});
+function Reset(){const[password,setPassword]=useState('');const[message,setMessage]=useState('');const[recovery,setRecovery]=useState(false);useEffect(()=>{setRecovery(window.location.hash.includes('type=recovery')||window.location.search.includes('type=recovery'));},[]);return <main className="auth-panel"><h1>Reset your password.</h1>{!recovery?<p className="form-description">Open the password reset link from your email to continue.</p>:<form onSubmit={async e=>{e.preventDefault();if(password.length<8||password.length>128){setMessage('Use 8–128 characters.');return;}const{error}=await supabase.auth.updateUser({password});setMessage(error?error.message:'Your password has been updated.');}}><div className="field"><label htmlFor="new-password">New password</label><input id="new-password" type="password" minLength={8} maxLength={128} required value={password} onChange={e=>setPassword(e.target.value)}/></div><Button className="w-full">Update password</Button></form>}<p role="status" className="text-primary text-sm mt-4">{message}</p></main>}
