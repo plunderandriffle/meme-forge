@@ -40,6 +40,32 @@ export type Database = {
           },
         ]
       }
+      application_notifications: {
+        Row: {
+          application_id: string
+          created_at: string
+          id: string
+        }
+        Insert: {
+          application_id: string
+          created_at?: string
+          id?: string
+        }
+        Update: {
+          application_id?: string
+          created_at?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "application_notifications_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "applications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       applications: {
         Row: {
           consent: boolean

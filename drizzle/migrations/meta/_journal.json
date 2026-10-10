@@ -8,6 +8,13 @@
       "when": 1791610561209,
       "tag": "0000_creator_applications",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791610897928,
+      "tag": "0001_secure_creator_notifications",
+      "breakpoints": true
     }
   ]
 }

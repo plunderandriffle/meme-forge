@@ -1,0 +1,11 @@
+REVOKE EXECUTE ON FUNCTION public.create_creator_profile() FROM PUBLIC, anon, authenticated;
+REVOKE EXECUTE ON FUNCTION public.is_creator_admin() FROM PUBLIC, anon;
+GRANT EXECUTE ON FUNCTION public.is_creator_admin() TO authenticated;
+CREATE TABLE public.application_notifications (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), application_id uuid NOT NULL REFERENCES public.applications(id) ON DELETE CASCADE, created_at timestamptz NOT NULL DEFAULT now());
+GRANT SELECT ON public.application_notifications TO authenticated;
+GRANT ALL ON public.application_notifications TO service_role;
+ALTER TABLE public.application_notifications ENABLE ROW LEVEL SECURITY;
+CREATE POLICY admin_notifications ON public.application_notifications FOR SELECT TO authenticated USING(public.is_creator_admin());
+CREATE FUNCTION public.notify_creator_application() RETURNS trigger LANGUAGE plpgsql SECURITY DEFINER SET search_path=public AS $$ BEGIN INSERT INTO public.application_notifications(application_id) VALUES(NEW.id); RETURN NEW; END; $$;
+REVOKE EXECUTE ON FUNCTION public.notify_creator_application() FROM PUBLIC,anon,authenticated;
+CREATE TRIGGER creator_application_notification AFTER INSERT ON public.applications FOR EACH ROW EXECUTE FUNCTION public.notify_creator_application();
