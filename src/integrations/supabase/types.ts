@@ -14,13 +14,133 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      application_drafts: {
+        Row: {
+          data: Json
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          data?: Json
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          data?: Json
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "application_drafts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      applications: {
+        Row: {
+          consent: boolean
+          created_at: string
+          creator_type: string
+          email: string
+          id: string
+          intended_use: string
+          interests: string[]
+          referral: string
+          source: string
+          status: string
+          user_id: string
+          vision: string
+        }
+        Insert: {
+          consent: boolean
+          created_at?: string
+          creator_type: string
+          email: string
+          id?: string
+          intended_use: string
+          interests: string[]
+          referral?: string
+          source: string
+          status?: string
+          user_id: string
+          vision: string
+        }
+        Update: {
+          consent?: boolean
+          created_at?: string
+          creator_type?: string
+          email?: string
+          id?: string
+          intended_use?: string
+          interests?: string[]
+          referral?: string
+          source?: string
+          status?: string
+          user_id?: string
+          vision?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "applications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          country: string
+          created_at: string
+          full_name: string
+          id: string
+          telegram: string
+          x_handle: string
+        }
+        Insert: {
+          country?: string
+          created_at?: string
+          full_name?: string
+          id: string
+          telegram?: string
+          x_handle?: string
+        }
+        Update: {
+          country?: string
+          created_at?: string
+          full_name?: string
+          id?: string
+          telegram?: string
+          x_handle?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          role: string
+          user_id: string
+        }
+        Insert: {
+          role: string
+          user_id: string
+        }
+        Update: {
+          role?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      is_creator_admin: { Args: never; Returns: boolean }
     }
     Enums: {
       [_ in never]: never
